@@ -4,7 +4,7 @@
 $output = '';
     if (isset($_POST['search'])) {
       $searchq = $_POST['search'];
-    
+
 
       $query = "SELECT * FROM tbl_employees WHERE lastName = '$searchq'";
       $results = mysqli_query($connection,$query);

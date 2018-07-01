@@ -1,5 +1,6 @@
 <<?php
     include 'includes/header.php';
+    include 'includes/connection.php';
  ?>
   <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -112,83 +113,20 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Leave Type</th>
-                    <th>Duration</th>
-                    <th>Date of Leave</th>
-                    <th>Date Submitted</th>
-                    <th>Status</th>
-                    <th>Comment</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.5
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5.5</td>
-                    <td>A</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 6
-                    </td>
-                    <td>Win 98+</td>
-                    <td>6</td>
-                    <td>A</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 7</td>
-                    <td>Win XP SP2+</td>
-                    <td>7</td>
-                    <td>A</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Other browsers</td>
-                    <td>All others</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>U</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  </tbody>
-                </table>
+                <?php
+                $sql = "SELECT e.firstName, e.lastName, l.leaveType, t.duration, t.dateOfLeave, t.dateSubmitted, t.status, t.comment FROM tbl_employees e INNER JOIN tbl_leavetransaction t on e.employeeID = t.employeeID INNER JOIN tbl_leaves l on l.id = t.id ";
+                $result = $connection->query($sql);
+
+                if ($result->num_rows > 0) {
+              echo "<table id='example1' class='table table-bordered table-striped'><thead><tr><th>Name</th><th>Leave Type</th><th>Duration</th><th>Date of Leave</th><th>Date Submitted</th><th>Status</th><th>Comment</th></tr></thead>";
+              // output data of each row
+              while($row = $result->fetch_assoc()) {
+                  echo "<tr><td>".$row['firstName'] . ' ' . $row['lastName']."</td><td>".$row["leaveType"]."</td><td>".$row["duration"]."</td><td>".$row["dateOfLeave"]."</td><td>".$row["dateSubmitted"]."</td><td>".$row["status"]."</td><td>".$row["comment"]."</td></tr>";
+              }
+              echo "</table>";
+          } else {
+              echo "0 results";
+          } ?>
               </div>
               <!-- /.card-body -->
 

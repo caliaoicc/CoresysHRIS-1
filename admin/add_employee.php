@@ -23,6 +23,16 @@
 
     <!-- Main content -->
     <section class="content">
+      <?php         if(isset($_SESSION['addSuccess'])){
+                echo "
+                <div class='alert alert-success alert-dismissible'>
+                  <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                  <h5><i class='icon fa fa-check'></i> Success!</h5>
+                  ".$_SESSION['addSuccess']."
+                </div>
+                ";
+                unset($_SESSION['addSuccess']);
+              } ?>
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->

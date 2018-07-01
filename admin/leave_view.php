@@ -1,5 +1,6 @@
 <<?php
     include 'includes/header.php';
+    include 'includes/connection.php';
  ?>
   <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -49,82 +50,24 @@
               <div class="card-header">
                 <h3 class="card-title">Search</h3>
               </div>
-              <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Leave Type</th>
-                    <th>Total</th>
-                    <th>Used</th>
-                    <th>Unused</th>
-                    <th>Unrendered</th>
-                    <th>Calendar</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                  </tr>
-                  </tbody>
-                </table>
+
+      <?php
+      $sql = "SELECT * FROM tbl_leaves";
+      $result = $connection->query($sql);
+
+      if ($result->num_rows > 0) {
+    echo "<table id='example1' class='table table-bordered table-striped'><thead><tr><th>Leave Type</th><th>Leave Count</th></tr></thead>";
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<tr><td>".$row["leaveType"]."</td><td>".$row["leaveCount"]."</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+} ?>
+              
+
               </div>
               <!-- /.card-body -->
 

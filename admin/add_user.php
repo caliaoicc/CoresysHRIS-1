@@ -39,7 +39,7 @@
                       <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Employee Name</label>
+                      <label for="exampleInputEmail1">Employee ID</label>
                       <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                     </div>
                     <div class="form-group">
@@ -140,10 +140,111 @@
                 <!-- /.row -->
               </div>
             </div>
+
             <!-- /.card -->
 
             <!-- /.card -->
           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Search</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Leave Type</th>
+                    <th>Duration</th>
+                    <th>Date of Leave</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                    <th>Comment</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>Trident</td>
+                    <td>Internet
+                      Explorer 4.0
+                    </td>
+                    <td>Win 95+</td>
+                    <td> 4</td>
+                    <td>X</td>
+                      <td>X</td>
+                        <td>X</td>
+                  </tr>
+                  <tr>
+                    <td>Trident</td>
+                    <td>Internet
+                      Explorer 5.0
+                    </td>
+                    <td>Win 95+</td>
+                    <td>5</td>
+                    <td>C</td>
+                      <td>X</td>
+                        <td>X</td>
+                  </tr>
+                  <tr>
+                    <td>Trident</td>
+                    <td>Internet
+                      Explorer 5.5
+                    </td>
+                    <td>Win 95+</td>
+                    <td>5.5</td>
+                    <td>A</td>
+                      <td>X</td>
+                        <td>X</td>
+                  </tr>
+                  <tr>
+                    <td>Trident</td>
+                    <td>Internet
+                      Explorer 6
+                    </td>
+                    <td>Win 98+</td>
+                    <td>6</td>
+                    <td>A</td>
+                      <td>X</td>
+                        <td>X</td>
+                  </tr>
+                  <tr>
+                    <td>Trident</td>
+                    <td>Internet Explorer 7</td>
+                    <td>Win XP SP2+</td>
+                    <td>7</td>
+                    <td>A</td>
+                      <td>X</td>
+                        <td>X</td>
+                  </tr>
+                  <tr>
+                    <td>Other browsers</td>
+                    <td>All others</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>U</td>
+                      <td>X</td>
+                        <td>X</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+
+
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-block btn-primary">Approve</button>
+            <button type="button" class="btn btn-flat btn-primary">Decline</button>
+            <button type="button" class="btn btn-block btn-primary">Forward</button>
+          </div>
+
         </div>
 
         <!-- /.row -->

@@ -25,7 +25,11 @@ include 'includes/connection.php';
 
   }
 
-
+  if (!mysqli_query($connection,$sql))
+  {
+      die('Error: ' . mysqli_error($con));
+  }
+  $_SESSION['addSuccess']="Employee Added Successfully!";
 
 header('location: add_employee.php');
 
