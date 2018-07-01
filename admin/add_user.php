@@ -1,5 +1,46 @@
 <<?php
+session_start();
     include 'includes/header.php';
+    include 'includes/connection.php';
+    $output = '';
+        if (isset($_POST['search'])) {
+          $searchq = $_POST['search'];
+
+
+          $query = "SELECT * FROM tbl_employees WHERE lastName = '$searchq'";
+          $results = mysqli_query($connection,$query);
+          $count = mysqli_num_rows($results);
+          if ($count == 0){
+            $output .= '<div class="row">
+              <div class="offset-md-5">
+                <h3><br><br><br><br><br><br>No Search Result.</h3>
+              </div>
+            </div>';
+          }else{
+            while($row = mysqli_fetch_array($results)) {
+              $firstName = $row['firstName'];
+              $lastName = $row['lastName'];
+              $position = $row['position'];
+              $employeeID = $row['employeeID'];
+
+              $output .= '
+              <div class="form-group">
+                <label for="exampleInputEmail1">Employee Name:&nbsp;' .$firstName . ' ' .$lastName . '</label>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Designation:&nbsp;' . $position . '</label>
+              </div>
+              ';
+            }
+          }
+        }else{
+          $output .= '                       <div class="form-group">
+                      <label for="exampleInputEmail1">Employee Name:&nbsp; ---</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Designation:&nbsp; ---</label>
+                    </div>';
+        }
  ?>
   <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -23,6 +64,16 @@
 
     <!-- Main content -->
     <section class="content">
+      <?php         if(isset($_SESSION['addUserSuccess'])){
+                echo "
+                <div class='alert alert-success alert-dismissible'>
+                  <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                  <h5><i class='icon fa fa-check'></i> Success!</h5>
+                  ".$_SESSION['addUserSuccess']."
+                </div>
+                ";
+                unset($_SESSION['addUserSuccess']);
+              } ?>
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-6">
@@ -36,219 +87,87 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Employee Name</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Employee ID</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                      <label>Leave Type</label>
-                      <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">Alabama</option>
-                        <option>Alaska</option>
-                        <option>California</option>
-                        <option>Delaware</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Washington</option>
+                      <form method="post" action="add_user.php">
+                      <select name="search" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">&nbsp;</option>
+                        <?php
+            $query = "SELECT * from tbl_employees";
+            $results = mysqli_query($connection,$query);
+            while ($rows = mysqli_fetch_assoc(@$results)){
+            ?>
+            <option value="<?php echo $rows['lastName'];?>"><?php echo $rows['firstName'] . ' ' . $rows['lastName'];?></option>
+            <?php
+            }
+            ?>
                       </select>
                     </div>
-                    <div class="form-group">
-                      <label>Date range:</label>
+                  </div>
 
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </div>
-                        <input type="text" class="form-control float-right" id="reservation">
+                    </div>
+                    <div class="row">
+
+                      <!-- /.col -->
+                      <div class="col-md-2 offset-md-10">
+                        <button type="submit" class="btn btn-block btn-primary">Search</button>
+                          <!-- /.input group -->
                       </div>
-                      <!-- /.input group -->
+                        </form>
+                      <!-- /.col -->
                     </div>
                   </div>
                   <!-- /.col -->
                 </div>
-                <div class="row">
-
-                  <!-- /.col -->
-                  <div class="col-md-2 offset-md-10">
-                    <button type="button" class="btn btn-block btn-primary">Search</button>
-                      <!-- /.input group -->
-                  </div>
-                  <!-- /.col -->
-                </div>
-
-
                 <!-- /.row -->
               </div>
-            </div>
-            <!-- /.card -->
 
-            <!-- /.card -->
+<div class="col-md-6">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title"></h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-md-12">
+        <form method="POST" action="add_user_process.php">
+<?php echo $output; ?>
+          <div class="form-group">
+            <label for="exampleInputEmail1">User ID:</label>
+            <input type="hidden" class="form-control" id="employeeID" name="employeeID" value="<?php echo $employeeID;?>" placeholder="<?php echo $employeeID;?>" >
+            <input type="text" class="form-control" id="userID" name="userID" placeholder="Enter User ID" >
           </div>
-          <div class="col-md-6">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" >
+          </div>
+          <div class="form-group">
+            <label>User Group</label>
+            <select class="form-control select2" style="width: 100%;" >
+              <option selected="selected">---</option>
 
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title"></h3>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Employee Name:</label>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Designation:</label>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">User ID:</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">User ID:</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                    </div>
-                    <div class="form-group">
-                      <label>Leave Type</label>
-                      <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">Alabama</option>
-                        <option>Alaska</option>
-                        <option>California</option>
-                        <option>Delaware</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Washington</option>
-                      </select>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-
-                  <!-- /.col -->
-                  <div class="col-md-2 offset-md-10">
-                    <button type="button" class="btn btn-block btn-primary">Search</button>
-                      <!-- /.input group -->
-                  </div>
-                  <!-- /.col -->
-                </div>
-
-
-                <!-- /.row -->
-              </div>
-            </div>
-
-            <!-- /.card -->
-
-            <!-- /.card -->
+            </select>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
 
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Search</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Leave Type</th>
-                    <th>Duration</th>
-                    <th>Date of Leave</th>
-                    <th>Date Submitted</th>
-                    <th>Status</th>
-                    <th>Comment</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.5
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5.5</td>
-                    <td>A</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 6
-                    </td>
-                    <td>Win 98+</td>
-                    <td>6</td>
-                    <td>A</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 7</td>
-                    <td>Win XP SP2+</td>
-                    <td>7</td>
-                    <td>A</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Other browsers</td>
-                    <td>All others</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>U</td>
-                      <td>X</td>
-                        <td>X</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
+      </div>
+      <div class="row">
 
+        <div class="col-md-2 offset-md-10">
+          <button type="submit" class="btn btn-block btn-primary">Create</button>
+        </div>
+        </form>
+        <!-- /.col -->
+      </div>
 
+    </div>
+  </div>
+
+</div>
             </div>
-          </div>
 
-          <div class="btn-group">
-            <button type="button" class="btn btn-block btn-primary">Approve</button>
-            <button type="button" class="btn btn-flat btn-primary">Decline</button>
-            <button type="button" class="btn btn-block btn-primary">Forward</button>
           </div>
-
         </div>
 
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>

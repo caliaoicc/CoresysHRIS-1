@@ -1,4 +1,5 @@
 <<?php
+session_start();
     include 'includes/header.php';
  ?>
   <body class="hold-transition sidebar-mini">
@@ -17,10 +18,11 @@
               <h1>Add Employee</h1>
           </div>
 
+
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
       <?php         if(isset($_SESSION['addSuccess'])){
@@ -62,7 +64,7 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Employee ID</label>
+                        <label>Employee ID</label>
                         <?php
                         echo "<input type='text' class='form-control' name='employeeID' id='employeeID' value='$employee_id' disabled>";
                          ?>
